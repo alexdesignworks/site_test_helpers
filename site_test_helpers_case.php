@@ -530,6 +530,27 @@ trait SiteTestHelpers {
   }
 
   /**
+   * Assert that element can be found and has text.
+   *
+   * @param $selector
+   *   The XPath or CSS query path used to find the element.
+   * @param string $message
+   *   Assertion message.
+   * @param string $group
+   *   Assertion group.
+   *
+   * @return mixed
+   *   TRUE if element can be found and has text, FALSE otherwise.
+   */
+  protected function assertElementHasTextByCss($selector, $message = 'Element with text exists', $group = 'Other') {
+    $xpath = $this->cssToXpath($selector);
+    $xpath .= '/descendant-or-self::*/text()';
+    $elements = $this->xpath($xpath);
+
+    return $this->assertTrue(!empty($elements), $message, $group);
+  }
+
+  /**
    * Checks to see if the title element contains specified text.
    *
    * @param string $pattern
