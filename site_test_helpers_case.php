@@ -101,7 +101,8 @@ trait SiteTestHelpers {
    * {@inheritdoc}
    */
   protected function drupalLogout() {
-    // Overrides default logout functionality to avoid returning to the user page.
+    // Overrides default logout functionality to avoid returning to the user
+    // page.
     $this->drupalGet('user/logout');
     $this->drupalGet('<front>');
     $this->assertElementExistsByCss('body.not-logged-in', 'User is no longer logged in');
@@ -377,7 +378,7 @@ trait SiteTestHelpers {
           '%uid' => $account->uid,
           '%pass' => $edit['pass'],
         ]),
-        t('User login')
+      t('User login')
     );
 
     return $account;
@@ -567,7 +568,7 @@ trait SiteTestHelpers {
   /**
    * Assert that element can be found and has text.
    *
-   * @param $selector
+   * @param string $selector
    *   The XPath or CSS query path used to find the element.
    * @param string $message
    *   Assertion message.
