@@ -243,6 +243,49 @@ trait SiteTestHelpers {
   }
 
   /**
+   * Process data provider and invoke callback.
+   *
+   * Implements functionality similar to phpunit's data provider.
+   *
+   * @code
+   * public function testAddition() {
+   *   $this->processProvider('providerAddition', function ($a, $b, $expected, $assertion_number) {
+   *     $this->assertEqual(myaddition($a, $b), $expected, format_string('Addition result is correct for assertion @number', [
+   *       '@number' => $assertion_number + 1,
+   *     ]));
+   *   });
+   * }
+   *
+   * public function providerAddition() {
+   *   return [
+   *     [0, 1, 1],
+   *     [1, 1, 2],
+   *   ];
+   * }
+   * @endcode
+   *
+   * @param string $provider_method
+   *   Data provider method that should return an array of arrays that are
+   *   callback arguments.
+   * @param string $callback
+   *   Callback to be called with each data row from provider.
+   */
+  protected function processProvider($provider_method, $callback) {
+    if (!method_exists($this, $provider_method)) {
+      throw new Exception(format_string('Unable to find provider method @method in class @class', [
+        '@method' => $provider_method,
+        '@class' => get_class($this),
+      ]));
+    }
+
+    $provider_data = call_user_func([$this, $provider_method]);
+
+    foreach ($provider_data as $index => $data) {
+      $args = array_merge($data, [$index]);
+      call_user_func_array($callback, $args);
+    }
+  }
+  /**
    * @} End of "Utilities and helpers"
    */
 
