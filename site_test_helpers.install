@@ -10,6 +10,8 @@
 function site_test_helpers_requirements($phase) {
   $requirements = [];
 
+  $t = get_t();
+
   switch ($phase) {
     case 'install':
       $filename = 'CssSelectorConverter.php';
@@ -28,9 +30,9 @@ function site_test_helpers_requirements($phase) {
 
       if (!is_readable($full_path)) {
         $requirements['library_cssselector'] = [
-          'title' => t('CssSelector Symfony component'),
+          'title' => $t('CssSelector Symfony component'),
           'severity' => REQUIREMENT_ERROR,
-          'description' => t('Unable to enable <em>Site Test helpers</em> module. Please download <em>CssSelector Symfony component</em> from %url and place into %libraries directory so that a %file file is accessible at %path.', [
+          'description' => $t('Unable to enable <em>Site Test helpers</em> module. Please download <em>CssSelector Symfony component</em> from %url and place into %libraries directory so that a %file file is accessible at %path.', [
             '%url' => 'https://github.com/symfony/css-selector',
             '%libraries' => 'libraries/' . $path,
             '%file' => $filename,
