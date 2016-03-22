@@ -387,12 +387,12 @@ trait SiteTestHelpers {
     $fail_count = 0;
 
     // Make this assertion universal.
-    if (!is_scalar($actual) && !is_scalar($expected)) {
+    if (is_scalar($actual) && is_scalar($expected)) {
       return $this->assertEqual($actual, $expected, $message);
     }
 
     $expected = (array) $expected;
-    $actual = (array) $expected;
+    $actual = (array) $actual;
     if (count($actual) != count($expected)) {
       $fail_count++;
     }
@@ -422,7 +422,12 @@ trait SiteTestHelpers {
 
     if (!$pass) {
       $message = empty($message) ? $message : rtrim($message, '.') . '. ';
-      $message .= 'Expected: ' . print_r($expected, TRUE) . ' Actual: ' . print_r($actual, TRUE);
+      if (drupal_is_cli()) {
+        $message .= 'Expected: ' . print_r($expected, TRUE) . ' Actual: ' . print_r($actual, TRUE);
+      }
+      else {
+        $message .= 'Expected: <pre>' . print_r($expected, TRUE) . '</pre> Actual: <pre>' . print_r($actual, TRUE) . '</pre>';
+      }
     }
 
     return $this->assertTrue($pass, $message);
