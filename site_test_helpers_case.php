@@ -365,6 +365,10 @@ trait SiteTestHelpers {
    * debugging.
    */
   protected function assertEqual($first, $second, $message = '', $group = 'Other') {
+    if (is_array($first) || is_array($second)) {
+      throw new Exception('Improper use of assertEqual() method with array arguments. Try using assertArray() instead.');
+    }
+
     if (empty($message)) {
       $message = format_string('@message (First value was "@first", second value was "@second")', [
         '@message' => $message,
