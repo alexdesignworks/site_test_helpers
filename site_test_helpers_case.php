@@ -110,23 +110,15 @@ trait SiteTestHelpers {
 
   /**
    * Generate random name.
-   *
-   * @deprecated
    */
   public static function randomName($length = 8) {
-    drupal_set_message(format_string('Using deprecated method !method', ['!method' => __FUNCTION__]), 'error');
-
     return \Drupal\drupal_helpers\Random::name($length);
   }
 
   /**
    * Generate random string.
-   *
-   * @deprecated
    */
   public static function randomString($length = 8) {
-    drupal_set_message(format_string('Using deprecated method !method', ['!method' => __FUNCTION__]), 'error');
-
     return \Drupal\drupal_helpers\Random::string($length);
   }
 
