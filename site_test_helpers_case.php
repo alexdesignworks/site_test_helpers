@@ -4,6 +4,9 @@
  * Site Test helpers functionality.
  */
 
+use Symfony\Component\CssSelector\CssSelectorConverter;
+use Drupal\drupal_helpers\Random;
+
 /**
  * Trait SiteTestHelpers.
  */
@@ -113,14 +116,14 @@ trait SiteTestHelpers {
    * Generate random name.
    */
   public static function randomName($length = 8) {
-    return \Drupal\drupal_helpers\Random::name($length);
+    return Random::name($length);
   }
 
   /**
    * Generate random string.
    */
   public static function randomString($length = 8) {
-    return \Drupal\drupal_helpers\Random::string($length);
+    return Random::string($length);
   }
 
   /**
@@ -169,7 +172,7 @@ trait SiteTestHelpers {
       throw new Exception(t('Unable to load class Symfony\Component\CssSelector\CssSelectorConverter'));
     }
 
-    $converter = new Symfony\Component\CssSelector\CssSelectorConverter();
+    $converter = new CssSelectorConverter();
 
     return $converter->toXpath($selector);
   }
@@ -286,6 +289,7 @@ trait SiteTestHelpers {
       call_user_func_array($callback, $args);
     }
   }
+
   /**
    * @} End of "Utilities and helpers"
    */
@@ -336,7 +340,7 @@ trait SiteTestHelpers {
   protected function drupalCreateUserWithRoles($role_names = [], $password = NULL, $edit_overrides = []) {
     // Create a user assigned to that role.
     $edit = [];
-    $edit['mail'] = \Drupal\drupal_helpers\Random::email();
+    $edit['mail'] = Random::email();
     $edit['name'] = $edit['mail'];
     $edit['pass'] = (is_null($password)) ? user_password() : $password;
     $edit['status'] = 1;
